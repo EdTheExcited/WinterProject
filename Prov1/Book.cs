@@ -1,12 +1,10 @@
 using System;
 using System.Collections.Generic;
-
 namespace Prov1
 {
     public class Book
     {
-        public int price;
-        private string name;
+        public string name { get; private set; }
         private int rarity;
         private string category;
         private int actualValue;
@@ -14,23 +12,28 @@ namespace Prov1
         private Random generator = new Random();
         List<string> introName = new List<string>()
         {
-            "Crazy", "The Amazing", "Curious", "Ultimate", "Illegal"
+            "Crazy", "The Amazing", "Curious", "Ultimate", "Illegal", "Sexy", "Sentimental", "Horny", "Baby"
         };
         List<string> endName = new List<string>()
         {
-            "George", "Hacker", "Goblin", "Guide", "Game"
+            "George", "Hacker", "Goblin", "Guide", "Game", "Devils", "Curses", "Lord", "Rainbow Dildo"
         };
         List<string> categories = new List<string>(){
-            "Scary", "Adventure", "Roleplaying", "Documentary", "Sci-Fi"
+            "Horror", "Adventure", "Roleplaying", "Documentary", "Sci-Fi", "Autobiography", "Medieval"
         };
+
+        public override string ToString()
+        {
+            return name;
+        }
 
 
         public Book()
         {
             int u = generator.Next(0, introName.Count);
             int u2 = generator.Next(0, endName.Count);
-            name = introName[u] + "" + endName[u2];
-            actualValue = generator.Next(300, 150001);
+            name = introName[u] + " " + endName[u2];
+            actualValue = generator.Next(300, 1501);
             rarity = generator.Next(1, 11);
             int i = generator.Next(0, 2);
             if (i == 0)
@@ -44,11 +47,16 @@ namespace Prov1
             int z = generator.Next(0, categories.Count);
             category = categories[z];
 
-
         }
-        public void PrintInfo()
+
+        public int Price(Customer customer)
         {
-            Console.WriteLine("Name: " + name + " Rarity: " + rarity + " Category: " + category + " Price " + price);
+            return (int)(actualValue * rarity * customer.customerKnowledge);
+        }
+
+        public void PrintInfo(Customer customer)
+        {
+            Console.WriteLine("Name: " + name + "\n Rarity: " + rarity + "\n Category: " + category + "\n Price " + Price(customer));
         }
 
     }
